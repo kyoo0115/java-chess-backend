@@ -3,14 +3,19 @@ package com.chess.engine.pieces;
 import com.chess.engine.Alliance;
 import com.chess.engine.board.Board;
 import com.chess.engine.board.Move;
+import lombok.Getter;
 
 import java.util.List;
 
 public abstract class Piece {
 
+    @Getter
     protected final int piecePosition;
+    @Getter
     protected final Alliance pieceAlliance;
+    @Getter
     protected final boolean isFirstMove;
+    @Getter
     protected final PieceType pieceType;
     private final int cachedHashCode;
 
@@ -84,24 +89,8 @@ public abstract class Piece {
         return this.cachedHashCode;
     }
 
-    public PieceType getPieceType() {
-        return this.pieceType;
-    }
-
-    public int getPiecePosition() {
-        return this.piecePosition;
-    }
-
-    public Alliance getPieceAlliance() {
-        return this.pieceAlliance;
-    }
-
     public int getPieceValue() {
         return this.pieceType.getPieceValue();
-    }
-
-    public boolean isFirstMove() {
-        return this.isFirstMove;
     }
 
     public abstract List<Move> calculateLegalMoves(final Board board);
@@ -117,9 +106,12 @@ public abstract class Piece {
         QUEEN("Q", false, false, 9),
         KING("K", true, false, 100);
 
+        @Getter
         private final boolean isKing;
+        @Getter
         private final boolean isRook;
         private final String symbol;
+        @Getter
         private final int pieceValue;
 
         PieceType(final String symbol, final boolean isKing, final boolean isRook, final int pieceValue) {
@@ -134,16 +126,5 @@ public abstract class Piece {
             return this.symbol;
         }
 
-        public int getPieceValue() {
-            return this.pieceValue;
-        }
-
-        public boolean isKing() {
-            return isKing;
-        }
-
-        public boolean isRook() {
-            return isRook;
-        }
     }
 }

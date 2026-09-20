@@ -1,7 +1,9 @@
 package com.chess.engine.board;
 
 import com.chess.engine.pieces.Piece;
+import lombok.Getter;
 
+@Getter
 public abstract class Tile {
 
     public static final int NUM_TILES = 64;
@@ -30,10 +32,6 @@ public abstract class Tile {
     public abstract boolean isTileOccupied();
 
     public abstract Piece getPiece();
-
-    public int getTileCoordinate() {
-        return this.tileCoordinate;
-    }
 
     public static final class EmptyTile extends Tile {
         private EmptyTile(final int coordinate) {

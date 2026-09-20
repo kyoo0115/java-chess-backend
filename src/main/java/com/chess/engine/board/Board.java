@@ -8,6 +8,8 @@ import com.chess.engine.player.WhitePlayer;
 import com.chess.engine.util.BoardUtils;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,14 +19,19 @@ import java.util.regex.Pattern;
 public class Board {
 
     private final Tile[] gameBoard;         // plain array — direct index, no boxing
+    @Getter
     private final Collection<Piece> whitePieces;
+    @Getter
     private final Collection<Piece> blackPieces;
 
     private final WhitePlayer whitePlayer;
     private final BlackPlayer blackPlayer;
+    @Getter
     private final Player currentPlayer;
 
+    @Getter
     private final Pawn enPassantPawn;
+    @Getter
     private final int halfMoveClock;        // tracked for correct FEN output
 
     private Board(final Builder builder) {
@@ -292,22 +299,6 @@ public class Board {
         return this.blackPlayer;
     }
 
-    public Player getCurrentPlayer() {
-        return this.currentPlayer;
-    }
-
-    public Collection<Piece> getBlackPieces() {
-        return this.blackPieces;
-    }
-
-    public Collection<Piece> getWhitePieces() {
-        return this.whitePieces;
-    }
-
-    public Pawn getEnPassantPawn() {
-        return this.enPassantPawn;
-    }
-
     public Iterable<Move> getAllLegalMoves() {
         return Iterables.unmodifiableIterable(Iterables.concat(this.whitePlayer.getLegalMoves(), this.blackPlayer.getLegalMoves()));
     }
@@ -324,17 +315,15 @@ public class Board {
         return gameBoard[tileCoordinate];
     }
 
-    public int getHalfMoveClock() {
-        return halfMoveClock;
-    }
-
     public static class Builder {
 
         // Fixed-size array: index = square (0-63), value = piece or null.
         // Avoids Integer boxing and HashMap hashing on every setPiece/get call.
         final Piece[] boardConfig = new Piece[BoardUtils.NUM_TILES];
+        @Setter
         Pawn enPassantPawn;
         Alliance castledAlliance; // set by CastleMove.execute() to mark which side just castled
+        @Setter
         int halfMoveClock = 0;
         private Alliance nextMoveMaker;
 
@@ -347,16 +336,9 @@ public class Board {
             this.nextMoveMaker = nextMoveMaker;
         }
 
-        public void setHalfMoveClock(final int halfMoveClock) {
-            this.halfMoveClock = halfMoveClock;
-        }
-
         public Board build() {
             return new Board(this);
         }
 
-        public void setEnPassantPawn(Pawn enPassantPawn) {
-            this.enPassantPawn = enPassantPawn;
-        }
     }
 }

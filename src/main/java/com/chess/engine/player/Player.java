@@ -9,6 +9,7 @@ import com.chess.engine.pieces.Rook;
 import com.chess.engine.util.BoardUtils;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
+import lombok.Getter;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,9 +23,13 @@ public abstract class Player {
     private static final int[] STRAIGHT_DIRS = {-1, 1, -8, 8};
 
     protected final Board board;
+    @Getter
     protected final King playerKing;
+    @Getter
     protected final Collection<Move> legalMoves;
+    @Getter
     private final boolean inCheck;
+    @Getter
     private final boolean castled;
 
     protected Player(Board board, Collection<Move> legalMoves, Collection<Move> opponentMoves,
@@ -161,14 +166,6 @@ public abstract class Player {
         return false;
     }
 
-    public King getPlayerKing() {
-        return this.playerKing;
-    }
-
-    public Collection<Move> getLegalMoves() {
-        return this.legalMoves;
-    }
-
     private King findKing() {
         for (final Piece piece : getActivePieces()) {
             if (piece.getPieceType().isKing()) return (King) piece;
@@ -180,20 +177,12 @@ public abstract class Player {
         return legalMoves.contains(move);
     }
 
-    public boolean isInCheck() {
-        return inCheck;
-    }
-
     public boolean isCheckMate() {
         return inCheck && !hasEscapeMoves();
     }
 
     public boolean isStaleMate() {
         return !inCheck && !hasEscapeMoves();
-    }
-
-    public boolean isCastled() {
-        return castled;
     }
 
     protected boolean hasEscapeMoves() {

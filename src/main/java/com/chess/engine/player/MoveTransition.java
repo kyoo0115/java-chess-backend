@@ -1,7 +1,9 @@
 package com.chess.engine.player;
 
 import com.chess.engine.board.Board;
+import lombok.Getter;
 
+@Getter
 public class MoveTransition {
 
     private final Board transitionBoard;
@@ -12,11 +14,4 @@ public class MoveTransition {
         this.moveStatus = moveStatus;
     }
 
-    public MoveStatus getMoveStatus() {
-        return this.moveStatus;
-    }
-
-    public Board getTransitionBoard() {
-        return this.transitionBoard;
-    }
 }

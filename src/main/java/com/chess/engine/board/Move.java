@@ -5,12 +5,16 @@ import com.chess.engine.pieces.Pawn;
 import com.chess.engine.pieces.Piece;
 import com.chess.engine.pieces.Rook;
 import com.chess.engine.util.BoardUtils;
+import lombok.Getter;
 
 public abstract class Move {
 
     private static final Move NULL_MOVE = new NullMove();
+    @Getter
     protected final Board board;
+    @Getter
     protected final Piece movedPiece;
+    @Getter
     protected final int destinationCoordinate;
     protected final boolean isFirstMove;
 
@@ -52,20 +56,8 @@ public abstract class Move {
                 getMovedPiece().equals(otherMove.getMovedPiece());
     }
 
-    public Board getBoard() {
-        return this.board;
-    }
-
-    public int getDestinationCoordinate() {
-        return this.destinationCoordinate;
-    }
-
     public int getCurrentCoordinate() {
         return this.getMovedPiece().getPiecePosition();
-    }
-
-    public Piece getMovedPiece() {
-        return this.movedPiece;
     }
 
     public boolean isAttack() {
@@ -378,6 +370,7 @@ public abstract class Move {
 
     static abstract class CastleMove extends Move {
 
+        @Getter
         protected final Rook castleRook;
         protected final int castleRookStart;
         protected final int castleRookDestination;
@@ -389,10 +382,6 @@ public abstract class Move {
             this.castleRookStart = castleRookStart;
             this.castleRookDestination = castleRookDestination;
 
-        }
-
-        public Rook getCastleRook() {
-            return this.castleRook;
         }
 
         @Override
